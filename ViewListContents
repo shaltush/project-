@@ -1,0 +1,55 @@
+package com.care.patient.Listadapter;
+
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.ListView;
+import android.widget.Toast;
+import java.util.ArrayList;
+
+/**
+ * Created by Shalini on 3/28/2018.
+ **/
+
+public class ViewListContents extends AppCompatActivity {
+    private static final String TAG = "ViewListContents";
+
+    DataHelper myDB;
+    ArrayList<User> userList;
+    ListView listView = (ListView) findViewById(R.id.listView);
+    User user;
+
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.viewcontents_layout);
+        myDB= new DataHelper(this);
+        userList = new ArrayList<>();
+
+        private void populateListView(){
+        Log.d(TAG, "populateViewListContents: Displaying data in the ListView.");
+    }
+
+        //get the data and oppend to a list
+        Cursor data = myDB.getListContents();
+        ArrayList<String>ViewListContents = new ArrayList<>();
+        int numRows = data.getCount();
+        if (numRows == 0) {
+            Toast.makeText(ViewListContents.this, "THERE IS NOTHING IN THIS DATABASE!", Toast.LENGTH_LONG).show();
+        }else{
+
+            while (data.moveToNext()) {
+                user = new User(data.getString(1), data.getString(2), data.getString(3), data.getString(4), data.getString(5));
+                userList.add(user);
+            }
+            FiveColumn_ListAdapter adapter= new FiveColumn_ListAdapter(this, R.layout.list_doctor,userList);
+            listView.setAdapter(adapter);
+
+        }
+
+    }
+
