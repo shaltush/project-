@@ -1,0 +1,64 @@
+package com.care.patient.Listadapter;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+import java.util.ArrayList;
+
+/**
+ * Created by Shalini on 3/29/2018.
+ **/
+
+public class FiveColumn_ListAdapter extends ArrayAdapter<User> {
+
+    private LayoutInflater mInflater;
+    private ArrayList<User> users;
+    private int mViewResourceId;
+
+
+    public FiveColumn_ListAdapter(Context context, int textViewResourceId, ArrayList<User> users) {
+        super(context, textViewResourceId, users);
+        this.users = users;
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mViewResourceId = textViewResourceId;
+
+    }
+
+    public View getView(int position, View convertView, ViewGroup parents) {
+        convertView = mInflater.inflate(mViewResourceId, null);
+
+        User user = users.get(position);
+
+
+        if (user != null) {
+            TextView Name = (TextView) convertView.findViewById(R.id.textName);
+            TextView Speciality = (TextView) convertView.findViewById(R.id.textSpeciality);
+            TextView Location = (TextView) convertView.findViewById(R.id.textLocation);
+            TextView Phone = (TextView) convertView.findViewById(R.id.textPhone);
+            TextView Email = (TextView) convertView.findViewById(R.id.textEmail);
+
+            if (Name != null) {
+                Name.setText((user.getName()));
+            }
+            if (Speciality != null) {
+                Speciality.setText((user.getSpeciality()));
+            }
+            if (Location != null) {
+                Location.setText((user.getLocation()));
+            }
+            if (Phone != null) {
+                Phone.setText((user.getPhone()));
+            }
+            if (Email != null) {
+                Email.setText((user.getEmail()));
+            }
+        }
+
+        return convertView;
+
+
+    }
+}
