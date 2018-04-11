@@ -1,0 +1,71 @@
+package com.care.patient.Listadapter;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.DatabaseErrorHandler;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+
+/**
+ * Created by Shalini on 3/28/2018.
+ **/
+
+ public class DataHelper extends SQLiteOpenHelper {
+     private static final String TAG = "DataHelper";
+
+     private static final String DATA_NAME = "users.db";
+     private static final String TABLE_NAME = "users.data";
+     private static final String COL1 = "ID";
+     private static final String COL2 = "NAME";
+     private static final String COL3 = "SPECIALITY";
+     private static final String COL4 = "LOCATION";
+     private static final String COL5 = "PHONE";
+     private static final String COL6 = "EMAIL";
+
+     public DataHelper (Context context) {
+         super(context, DATA_NAME, null, 1);
+     }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+     String createTable = "CREATE TABLE " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," + " NAME TEXT, SPECIALITY TEXT, LOCATION TEXT, PHONE TEXT, EMAIL TEXT)";
+        db.execSQL(createTable);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(" DROP IF TABLE EXITS " + TABLE_NAME);
+        onCreate(db);
+    }
+
+    public boolean addData(String Name, String Speciality, String Location, String Phone, String Email) {
+         SQLiteDatabase db = this.getWritableDatabase();
+         ContentValues contentValues = new ContentValues();
+         contentValues.put(COL2, Name);
+         contentValues.put(COL3, Speciality);
+         contentValues.put(COL4, Location);
+         contentValues.put(COL4, Phone);
+         contentValues.put(COL5, Email);
+
+         Log.d(TAG, "addData: Adding" + Name,Speciality,Location,Phone,Email + "to" + TABLE_NAME);
+
+         long result = db.insert (TABLE_NAME, null, contentValues);
+
+         //if date as inserted incorrectly it will return
+         if (result == -1) {
+             return false;
+         } else {
+             return true;
+         }
+    }
+        //query for 1 week repeats
+        public Cursor getListContents() {
+             SQLiteDatabase db = this.getWritableDatabase();
+             String query =("SELECT * FROM " + TABLE_NAME, null);
+             Cursor data = db.rawQuery(query,null);
+             return data;
+     }
+}
