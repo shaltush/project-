@@ -1,0 +1,42 @@
+package com.care.patient.Listadapter;
+
+/**
+ * Created by Shalini on 3/29/2018.
+ **/
+
+public class User {
+    private String Name;
+    private String Speciality;
+    private String Location;
+    private String Phone;
+    private String Email;
+
+
+
+    public User(String name, String speciality, String location, String phone, String email){
+        Name = name;
+        Speciality = speciality;
+        Location = location;
+        Phone = phone;
+        Email = email;
+
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public String getSpeciality() { return Speciality;}
+
+    public String getLocation() {
+        return Location;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+}
